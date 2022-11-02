@@ -1,0 +1,44 @@
+const initialState = {
+    items: [
+        {
+            id: 1, // all id must be unique.
+            title: "watch react lectures",
+            body: "chapter 1 - chapter 12",
+            isDone: false
+        },
+        {
+            id: 2, // all id must be unique.
+            title: "eat lunch",
+            body: "what should I eat..?",
+            isDone: false
+        }
+    ]
+};
+
+const ADD_TODO = 'personal-task/todos/ADD_TODO';
+// const UPDATE_ITEM = 'personal-task/todos/UPDATE_ITEM';
+// const DELETE_ITEM = 'personal-task/todos/DELETE_ITEM';
+export const addTodo = toDo => ({ type: ADD_TODO, payload: toDo });
+// export const updateItem = toDo => ({ type: UPDATE_ITEM, payload: toDo });
+// export const deleteItem = toDo => ({ type: DELETE_ITEM, payload: toDo });
+
+const reducer = (state=initialState, action) => {
+    switch (action.type) {
+        case ADD_TODO:
+            return {
+                items: [...state.items, action.payload]
+            };
+        // case UPDATE_ITEM:
+        //     return {
+        //         items: [...state.items, action.payload]
+        //     };
+        // case DELETE_ITEM:
+        //     return {
+        //         items: [...state.items, action.payload]
+        //     };
+        default:
+            return state;
+    }
+}
+
+export default reducer;

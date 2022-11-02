@@ -1,4 +1,6 @@
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { deleteItem, updateStatusItem } from "../redux/modules/todos";
 
 const ContainerListTodo = styled.div`
     width: 270px;
@@ -23,26 +25,18 @@ const ContainerButton = styled.div`
 `;
 
 const Todos = (props) => {
-    const {todo,setTodos} = props;
+    const {todo} = props;
+    const dispatch = useDispatch();
     return (
         <ContainerListTodo key={todo.id}>
             <h4>{todo.title}</h4>
             <p>{todo.body}</p>
             <ContainerButton>
                 <ButtonAction borderColor='red' onClick={() => 
-                    setTodos((prev) =>
-                        prev.filter((prev) => prev.id !== todo.id)
-                    )
+                    dispatch(deleteItem(todo.id))
                 }>Delete</ButtonAction>
                 <ButtonAction borderColor='green' onClick={() => 
-                    setTodos((prevs) => {
-                        return prevs.map((prev) => {
-                          if (prev.id === todo.id) {
-                            return { ...prev, isDone: !prev.isDone };
-                          }
-                          return prev;
-                        });
-                      })
+                    dispatch(updateStatusItem(todo.id))
                     }>{todo.isDone ? 'Cancel':'Done'}</ButtonAction>
             </ContainerButton>
         </ContainerListTodo>

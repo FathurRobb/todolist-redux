@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { addTodo } from "../redux/modules/todos";
 
@@ -43,33 +43,26 @@ const ButtonSubmit = styled.button`
 
 const Form = () => {
     const dispatch = useDispatch();
-    const todos = useSelector(state => state.toDos.items)
-    const [title, setTitle] = useState('');
-    const [body, setBody] = useState('')
+    // const todos = useSelector(state => state.toDos.items)
+    const [form, setForm] = useState({ title: '', body: '' });
 
     const handleChange = (e) => {
-        if (e.target.name === 'title') {
-            setTitle(e.target.value)
-        } else {
-            setBody(e.target.value)
-        }
+        setForm({ ...form, [e.target.name]: e.target.value });
     }
 
     const handleAddTodo = (e) => {
         e.preventDefault();
-
-        dispatch(addTodo([...todos, { id: `id-${Math.floor(Math.random() * 10000)}`, title, body, isDone: false }]));
-        setTitle('');
-        setBody('');
+        dispatch(addTodo(form));
+        setForm({ title: '', body: '' });
     }
 
     return (
         <ContianerForm onSubmit={(e) => handleAddTodo(e)}>
             <ContainerFormInput>
                 <LabelInput>Title</LabelInput>
-                <InputForm type="text" name="title" value={title} onChange={handleChange}/>
+                <InputForm type="text" name="title" value={form.title} onChange={handleChange}/>
                 <LabelInput>Body</LabelInput>
-                <InputForm type="text" name="body" value={body} onChange={handleChange}/>
+                <InputForm type="text" name="body" value={form.body} onChange={handleChange}/>
             </ContainerFormInput>
             <ButtonSubmit>Add</ButtonSubmit>
         </ContianerForm>

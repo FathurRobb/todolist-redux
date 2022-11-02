@@ -16,26 +16,38 @@ const initialState = {
 };
 
 const ADD_TODO = 'personal-task/todos/ADD_TODO';
-// const UPDATE_ITEM = 'personal-task/todos/UPDATE_ITEM';
-// const DELETE_ITEM = 'personal-task/todos/DELETE_ITEM';
+const UPDATE_STATUS_ITEM = 'personal-task/todos/UPDATE_STATUS_ITEM';
+const DELETE_ITEM = 'personal-task/todos/DELETE_ITEM';
 export const addTodo = toDo => ({ type: ADD_TODO, payload: toDo });
-// export const updateItem = toDo => ({ type: UPDATE_ITEM, payload: toDo });
-// export const deleteItem = toDo => ({ type: DELETE_ITEM, payload: toDo });
+export const updateStatusItem = toDo => ({ type: UPDATE_STATUS_ITEM, payload: toDo });
+export const deleteItem = toDo => ({ type: DELETE_ITEM, payload: toDo });
 
 const reducer = (state=initialState, action) => {
     switch (action.type) {
         case ADD_TODO:
             return {
-                items: [...state.items, action.payload]
+                items: [
+                    ...state.items,
+                    {
+                        id: +new Date(),
+                        title: action.payload.title,
+                        body: action.payload.body,
+                        isDone: false,
+                    },
+                ]
             };
-        // case UPDATE_ITEM:
-        //     return {
-        //         items: [...state.items, action.payload]
-        //     };
-        // case DELETE_ITEM:
-        //     return {
-        //         items: [...state.items, action.payload]
-        //     };
+            // console.log(state)
+        case UPDATE_STATUS_ITEM:
+            return {
+                items:[
+                    ...state.items.map((todo) => {
+                        if (todo.id === action.payload) {
+                            return { ...todo, isDone: !todo.isDone };
+                        }
+                        return todo;
+                    })]};
+        case DELETE_ITEM:
+            return {items:[...state.items.filter((todo) => todo.id !== action.payload)]}
         default:
             return state;
     }

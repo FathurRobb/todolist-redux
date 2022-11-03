@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { deleteItem, updateStatusItem } from "../redux/modules/todos";
 
@@ -24,11 +25,18 @@ const ContainerButton = styled.div`
     gap: 20px;
 `;
 
+// const LinkDetail = styled.a`
+//     text-decoration: none;
+//     cursor: pointer;
+// `
+
 const Todos = (props) => {
     const {todo} = props;
     const dispatch = useDispatch();
     return (
         <ContainerListTodo key={todo.id}>
+            {/* <LinkDetail href={`/todolist/${todo.id}`}>Detail nih</LinkDetail> */}
+            <Link to={`/todolist/${todo.id}`} style={{textDecoration: 'none'}}>Detail</Link>
             <h4>{todo.title}</h4>
             <p>{todo.body}</p>
             <ContainerButton>

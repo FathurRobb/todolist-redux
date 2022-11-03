@@ -1,8 +1,8 @@
-import TodoList from "./pages/TodoList";
+import Router from "./Router";
 
 function App() {
   return (
-    <TodoList/>
+    <Router/>
   );
 }
 
